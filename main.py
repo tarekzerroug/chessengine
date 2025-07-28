@@ -124,8 +124,19 @@ def check_options(pieces, locations, turn):
             moves_list = check_pawn(location, turn)
         if piece == 'queen':
             moves_list = check_queen(location, turn)
-      
+        if piece == 'knight':
+            moves_list = check_knight(location, turn) 
+        
+        if piece == 'king':
+            moves_list = check_king(location, turn)
+        
+        if piece == 'rook':
+            moves_list = check_rook(location, turn)
+        
+        if piece == 'bishop':
+            moves_list = check_bishop(location, turn) 
         all_moves_list.append(moves_list)
+   
     return all_moves_list
 
 def check_pawn(position , color ):
@@ -153,7 +164,7 @@ def check_pawn(position , color ):
     return moves_list    
 
 def check_queen(position, color):
-    if color == "white":
+    
         moves_list = []
         (x, y) = position   
         if color == "white" :
@@ -176,9 +187,63 @@ def check_queen(position, color):
                 moves_list.append((x, y - 2))
         return moves_list    
 
+def check_king(position, color):
+        moves_list = []
+        (x, y) = position
+        if color == "white":    
+            friends_locations = white_locations
+        else :
+            friends_locations = black_locations
+            
+        if (x + 1, y) not in friends_locations:
+            moves_list.append((x + 1, y))
+        if (x - 1, y) not in friends_locations:
+            moves_list.append((x - 1, y))
+        if (x, y + 1) not in friends_locations:
+            moves_list.append((x, y + 1))
+        if (x, y - 1) not in friends_locations:
+            moves_list.append((x, y - 1))
+        if (x + 1, y + 1) not in friends_locations:
+            moves_list.append((x + 1, y + 1))
+        if (x - 1, y - 1) not in friends_locations:
+            moves_list.append((x - 1, y - 1))
+        if (x + 1, y - 1) not in friends_locations:
+            moves_list.append((x + 1, y - 1))
+        if (x - 1, y + 1) not in friends_locations:
+            moves_list.append((x - 1, y + 1))
+        return moves_list
 
-
-
+def check_rook(position, color):
+    pass
+ 
+def check_bishop(position, color):
+    pass
+def check_knight(position, color):  
+    (x , y ) = position
+    moves_list = [] 
+    if color == "white":
+        friends_locations = black_locations
+    else :
+        friends_locations = white_locations
+        
+    if (x + 2, y + 1) not in friends_locations :
+        moves_list.append((x + 2, y + 1))   
+    if (x + 2, y - 1) not in friends_locations :
+        moves_list.append((x + 2, y - 1))
+    if (x - 2, y + 1) not in friends_locations :
+        moves_list.append((x - 2, y + 1))
+    if (x - 2, y - 1) not in friends_locations :
+        moves_list.append((x - 2, y - 1))
+    if (x + 1, y + 2) not in friends_locations :
+        moves_list.append((x + 1, y + 2))
+    if (x + 1, y - 2) not in friends_locations :
+        moves_list.append((x + 1, y - 2))
+    if (x - 1, y + 2) not in friends_locations :
+        moves_list.append((x - 1, y + 2))
+    if (x - 1, y - 2) not in friends_locations :
+         moves_list.append((x - 1, y - 2))
+    return moves_list
+    
 def draw_valid_moves(moves):
     
    for move in range(len(moves)):
