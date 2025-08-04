@@ -138,7 +138,7 @@ def check_options(pieces, locations, turn):
         all_moves_list.append(moves_list)
         
        
-    return all_moves_list
+    return all_moves_lis
 
 def check_pawn(position , color ):
     moves_list = []
@@ -340,9 +340,16 @@ def draw_captured():
 
 
 def draw_game_over():
-    pygame.draw.rect(screen, 'black', [200, 200, 400, 50])
-    screen.blit(font.render("game over ", True, (255, 255, 255)))
+    pygame.draw.rect(screen, 'black', [200, 200, 400, 100])
+    screen.blit(font.render("game over", True, "white "), (250, 210))
+    small_font = pygame.font.SysFont(None, 40)  # or pygame.font.Font("your_font.ttf", 20)
 
+   
+    text = small_font.render("Press enter to restart", True, "white")
+
+   
+    screen.blit(text, (250, 270))
+   
 
 
 
@@ -353,7 +360,7 @@ white_options = check_options(white_pieces, white_locations, "white")
 winner = ""
 counter = 0 
 run  = True
-
+game_over = False
 
 
 
@@ -375,7 +382,7 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not game_over:
             mouse_x, mouse_y = event.pos
             x_coord = event.pos[0] // 100
             y_coord = event.pos[1] // 100
@@ -424,8 +431,28 @@ while run:
                     turn_step = 0
                     selection = 100
                     valid_moves = []
+        if event.type == pygame.KEYDOWN:
+           if event.key == pygame.K_RETURN:
+                winner = ""
+                game_over = False 
+                
+                white_pieces = ["rook", "knight", "bishop", "queen", "king", "bishop", "knight", "rook" , "pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn"]
+                black_pieces = ["rook", "knight", "bishop", "queen", "king", "bishop", "knight", "rook" , "pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn"]
+                white_locations = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
+                            (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1)]
+                black_locations = [(0, 7), (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7), (7, 7),
+                            (0, 6), (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6)]
+                captured_pieces_white = []
+                captured_pieces_black = []
+                turn_step = 0 
+                valid_moves = []
+                selection = 100
+                black_options = check_options(black_pieces, black_locations, "black")
+                white_options = check_options(white_pieces, white_locations, "white")
+    
     if winner !=  "" :
         draw_game_over()
+        game_over = True 
     pygame.display.update()
 
 pygame.quit()
