@@ -342,7 +342,7 @@ def draw_captured():
 def draw_game_over():
     pygame.draw.rect(screen, 'black', [200, 200, 400, 100])
     screen.blit(font.render("game over", True, "white "), (250, 210))
-    small_font = pygame.font.SysFont(None, 40)  # or pygame.font.Font("your_font.ttf", 20)
+    small_font = pygame.font.SysFont(None, 40)  
 
    
     text = small_font.render("Press enter to restart", True, "white")
